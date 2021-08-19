@@ -1,5 +1,4 @@
 const { Product, Sequelize } = require('../models');
-
 const { Op } = Sequelize;
 
 exports.getProducts = async (req, res, next) => {
@@ -8,14 +7,14 @@ exports.getProducts = async (req, res, next) => {
   let limit;
   let offset;
 
-  // filtering - [name]
+  // filtering - [category]
   if (filter !== '' && typeof filter !== 'undefined') {
-    const query = filter.name.split(',').map((item) => ({
-      [Op.iLike]: `%${item}%`,
+    const query = filter.category.split(',').map((item) => ({
+      [Op.eq]: item,
     }));
 
     paramQuerySQL.where = {
-      name: { [Op.or]: query },
+      id_category: { [Op.or]: query },
     };
   }
 
